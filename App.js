@@ -3,13 +3,15 @@ import {ActivityIndicator, FlatList, ScrollView, Text, View} from 'react-native'
 
 export default App = () => {
     const [isLoading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
+    const [user, setUser] = useState([]);
 
-    const getMovies = async () => {
+
+    const getUsers = async () => {
         try {
-            const response = await fetch('https://reactnative.dev/movies.json');
+            const response = await fetch('https://app-planning-cda.herokuapp.com/api/user/exam?token=0ab80d1e2c28465638c3b3a4b34c6ad9');
             const json = await response.json();
-            setData(json.movies);
+            setUser([json.data]);
+
         } catch (error) {
             console.error(error);
         } finally {
@@ -18,34 +20,23 @@ export default App = () => {
     }
 
     useEffect(() => {
-        getMovies();
+        getUsers();
+
+
     }, []);
 
-    return (
-        <View style={{ flex: 1, padding: 24 }}>
-            {isLoading ? <ActivityIndicator/> : (
-                <FlatList
-                    data={data}
-                    keyExtractor={({ id }, index) => id}
-                    renderItem={({ item }) => (
-                        <Text>{item.title}, {item.releaseYear}</Text>
-                    )}
-                />
+    return isLoading ? (
+        <ActivityIndicator />
+    ) : (
+        <>
+            {user?.map((user, index) => {
+                return <View key ={index}>
+                    <Text> {user.id} </Text>
+                    <Text> {user.email} </Text>
 
-            )}
 
-            <ScrollView>
-                {
-                    data.map(item => (
-
-                            <View key={item.id }>
-                                <Text>
-                                    {item.title }
-                                </Text>
-                            </View>
-                    ))
-                }
-            </ScrollView>
-        </View>
+                </View>;
+            })}
+        </>
     );
 };
