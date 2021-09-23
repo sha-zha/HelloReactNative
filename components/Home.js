@@ -16,17 +16,16 @@ import profile from '../assets/images/person.png';
 const Home = (navigation) => {
   return (
 
-      <View style={styles.blocHedaer}>
+      <View>
           <SafeAreaView>
-              <View >
-                  <Image source={profile} style={styles.profile} />
+              <ScrollView>
+                  <View  style={styles.blocHedaer}>
+                      <Text> menu</Text>
+                      <Image source={profile} style={styles.profile} />
 
-              </View>
-              <View>
-                  <Text>
-                      Deuxieme
-                  </Text>
-              </View>
+                  </View>
+              </ScrollView>
+
           </SafeAreaView>
       </View>
   );
@@ -35,15 +34,15 @@ const Home = (navigation) => {
     const styles = StyleSheet.create({
     blocHedaer : {
 
-        flex : 1,
-        flexDirection: 'column',
-        justifyContent:'center',
+        display : 'flex',
+        flexDirection: 'row',
+        justifyContent:'space-between',
         alignItems:'center',
-
+        width: '100%',
     },
     profile : {
         borderRadius: 60,
-        marginTop:100,
+        marginTop:30
     }
 
 });
