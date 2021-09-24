@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import {ActivityIndicator, FlatList, ScrollView, Text, View} from 'react-native';
+import {ActivityIndicator, Text, View} from 'react-native';
 
 export default App = () => {
     const [isLoading, setLoading] = useState(true);
     const [user, setUser] = useState([]);
-
 
     const getUsers = async () => {
         try {
@@ -22,21 +21,45 @@ export default App = () => {
     useEffect(() => {
         getUsers();
 
-
     }, []);
 
     return isLoading ? (
         <ActivityIndicator />
     ) : (
-        <>
-            {user?.map((user, index) => {
+
+    <>
+            {user.map( function (user, index){
+
                 return <View key ={index}>
                     <Text> {user.id} </Text>
                     <Text> {user.email} </Text>
+                    <Text>{user.promotion.id}</Text>
+                    <Text> {user.exam.label} </Text>
 
+                    {
+                        user.exam.map(function (exams) {
 
+                            //faire le return du deuxième objet sinon ça ne s'affiche pas
+                            return exams.activities.map(
+
+                            function (act, id) {
+
+                                return <View key={id}>
+                                    <Text>
+                                        {act.exam}
+                                    </Text>
+                                </View>
+                            })
+
+                         })
+                    }
                 </View>;
-            })}
+
+                })
+            }
+
+
+
         </>
     );
 };
